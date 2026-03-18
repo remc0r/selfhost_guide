@@ -9,6 +9,7 @@ notes: il est préférable de lire ce repo avec l'interface [Obsidian](https://o
 
 ## Configuration
 
+- [Ansible](Configuration/Ansible.md)
 - [Docker](Configuration/Docker.md)
 - [Créer son propre tunnel Cloudflare](Configuration/Créer%20son%20propre%20tunnel%20Cloudflare.md)
 - [Intro ligne de commande Linux](Configuration/Intro%20ligne%20de%20commande%20Linux.md)
@@ -19,6 +20,7 @@ notes: il est préférable de lire ce repo avec l'interface [Obsidian](https://o
 ## Security
 
 - [Passwords](security/Passwords.md)
+- [firewall et ports ouverts](security/firewall%20et%20ports%20ouverts.md)
 
 ---
 
