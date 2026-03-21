@@ -34,7 +34,7 @@ notes: il est préférable de lire ce repo avec l'interface [Obsidian](https://o
 ## Github resources
 
 - https://github.com/remc0r/homelab_install
-- https://github.com/awesome-selfhosted/awesome-selfhosted
+- https://awesome-selfhosted.net/
 
 ---
 ## General Resources
