@@ -21,3 +21,5 @@ sudo ufw enable
 # vérifier  
 sudo ufw status verbose
 ```
+
+![](../__images/Pasted%20image%2020260318220720.png)

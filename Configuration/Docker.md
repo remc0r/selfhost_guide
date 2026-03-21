@@ -1,4 +1,3 @@
-
 # Introduction
 ## Contexte général 
 

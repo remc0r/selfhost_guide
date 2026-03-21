@@ -37,6 +37,11 @@ notes: il est préférable de lire ce repo avec l'interface [Obsidian](https://o
 - https://github.com/awesome-selfhosted/awesome-selfhosted
 
 ---
+## General Resources
+
+- Cheat sheets imagés : [https://wizardzines.com/](https://wizardzines.com/ "https://wizardzines.com/")
+- Cheat sheet git : https://wizardzines.com/git-cheat-sheet.pdf
+
 
 ## Obsidian resources
 

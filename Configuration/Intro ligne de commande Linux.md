@@ -1,4 +1,4 @@
-
+![](../__images/Pasted%20image%2020260321195538.png)
 
 ```bash
 ssh user@ip_du_serveur
