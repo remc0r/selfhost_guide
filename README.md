@@ -30,7 +30,9 @@ notes: il est préférable de lire ce repo avec l'interface [Obsidian](https://o
 - autotagging avec [beets](Music/beets.md)
 
 ---
+## Nas
 
+- [how to RAID5 on debian](NAS/how%20to%20RAID5%20on%20debian.md)
 ## Github resources
 
 - https://github.com/remc0r/homelab_install

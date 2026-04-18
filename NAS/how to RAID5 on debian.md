@@ -1,0 +1,110 @@
+
+# RAID5
+https://std.rocks/gnulinux_nas.html
+```bash
+#Créer la partition sur le premier disque
+sudo gdisk /dev/sda
+
+#Copier la config partition sur les deux autres disques
+sudo sgdisk /dev/sda -R /dev/sdb
+sudo sgdisk /dev/sda -R /dev/sdc
+
+#Randomise les GUID des disques/partition
+sudo sgdisk -G /dev/sdb
+sudo sgdisk -G /dev/sdc
+
+#Installer l'outil pour créer le RAID
+sudo apt install mdadm
+
+#Créer le RAID5
+sudo mdadm --create --verbose /dev/md0   --level=5   --raid-devices=3   --name=remnas   /dev/sda1 /dev/sdb1 /dev/sdc1
+
+# Vérifier l'avancement
+cat /proc/mdstat
+
+#Créer dossier puis le monter
+mkdir data
+sudo mount /dev/md0 /data
+
+#Enregistrer la conf
+sudo mdadm --detail --scan | sudo tee -a /etc/mdadm/mdadm.conf
+
+#Faire en sorte que ça se monte au démarrage
+echo "/dev/mdO /data ext4 rw,nofail,relatime,x-systemd.device-timeout=20s,defaults 0 2" >> /etc/fstab
+
+echo "UUID=bbc1fa53-d6a4-4428-b182-c1a9ef80bcc5 /data ext4 defaults,nofail 0 2" | sudo tee -a /etc/fstab
+
+```
+
+## Bonus
+
+```bash
+#Vérifier l'état des ports USB
+lsusb -t
+
+#Lister les disques
+lsblk
+```
+
+# NFS
+
+https://www.linuxtricks.fr/wiki/debian-installer-un-serveur-nfs
+
+## Sur le NAS
+```bash
+#Installer utilitaire NFS
+sudo apt install nfs-kernel-server
+
+#Configurer les règles de partage
+sudo nano /etc/exports 
+
+# /data 192.168.1.0/24(rw,sync,no_subtree_check)
+
+#Enable et/ou redemarrer
+sudo systemctl enable --now nfs-server.service
+sudo systemctl restart nfs-server
+
+#Gestion des droits -> ici je mets le meme user que sur mon serveur pour éviter les conflits
+sudo chown -R remcor:remcor /data
+sudo chmod -R 775 /data
+
+```
+
+## Sur le serveur client
+```bash
+# Installer l'utilitaire NFS
+sudo apt install nfs-common
+# Monter le dossier NFS avec l'ip du NAS
+sudo mount -t nfs 192.168.1.120:/data /media
+
+```
+# TODO
+
+- Ajouter un grafana avec prometheus
+- Faire script post download Torrent dans qbitorrent avec 
+```bash
+#!/bin/bash  
+  
+TORRENT_DIR="$1"
+TORRENT_NAME="$2"  
+DEST="/data/media/movies"  
+  
+rsync -av "$TORRENT_DIR/" "$DEST/"  
+rm -rf "$TORRENT_NAME"
+```
+Supported parameters (case sensitive):
+
+- %N: Torrent name
+- %L: Category
+- %G: Tags (separated by comma)
+- %F: Content path (same as root path for multifile torrent)
+- %R: Root path (first torrent subdirectory path)
+- %D: Save path
+- %C: Number of files
+- %Z: Torrent size (bytes)
+- %T: Current tracker
+- %I: Info hash v1
+- %J: Info hash v2
+- %K: Torrent ID
+
+Tip: Encapsulate parameter with quotation marks to avoid text being cut off at whitespace (e.g., "%N")
