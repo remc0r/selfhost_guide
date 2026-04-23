@@ -35,7 +35,7 @@ services:
       restart: always
 ```
 
-Une fois configuré et déployé via le flux : [Créer son propre tunnel Cloudflare](../Configuration/Créer%20son%20propre%20tunnel%20Cloudflare.md) [Procédure d'installation d'un nouveau service](../Configuration/Procédure%20d'installation%20d'un%20nouveau%20service.md)
+Une fois configuré et déployé via le flux : [Créer son propre tunnel Cloudflare](../configuration/Créer%20son%20propre%20tunnel%20Cloudflare.md) [Procédure d'installation d'un nouveau service](../configuration/Procédure%20d'installation%20d'un%20nouveau%20service.md)
 
 ### Extension navigateur
 

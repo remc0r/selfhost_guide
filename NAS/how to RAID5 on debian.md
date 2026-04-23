@@ -78,33 +78,4 @@ sudo apt install nfs-common
 sudo mount -t nfs 192.168.1.120:/data /media
 
 ```
-# TODO
 
-- Ajouter un grafana avec prometheus
-- Faire script post download Torrent dans qbitorrent avec 
-```bash
-#!/bin/bash  
-  
-TORRENT_DIR="$1"
-TORRENT_NAME="$2"  
-DEST="/data/media/movies"  
-  
-rsync -av "$TORRENT_DIR/" "$DEST/"  
-rm -rf "$TORRENT_NAME"
-```
-Supported parameters (case sensitive):
-
-- %N: Torrent name
-- %L: Category
-- %G: Tags (separated by comma)
-- %F: Content path (same as root path for multifile torrent)
-- %R: Root path (first torrent subdirectory path)
-- %D: Save path
-- %C: Number of files
-- %Z: Torrent size (bytes)
-- %T: Current tracker
-- %I: Info hash v1
-- %J: Info hash v2
-- %K: Torrent ID
-
-Tip: Encapsulate parameter with quotation marks to avoid text being cut off at whitespace (e.g., "%N")
