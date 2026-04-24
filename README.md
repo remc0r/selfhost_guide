@@ -5,39 +5,41 @@ notes: il est préférable de lire ce repo avec l'interface [Obsidian](https://o
 ---
 ## configuration
 
+### docker
+- [introduction & installation](configuration/docker/introduction%20&%20installation.md)
+- [move docker root folder location](configuration/docker/move%20docker%20root%20folder%20location.md)
+
+### autre
 - [Ansible](configuration/Ansible.md)
-- [Docker](configuration/Docker.md)
 - [Créer son propre tunnel Cloudflare](configuration/Créer%20son%20propre%20tunnel%20Cloudflare.md)
 - [Intro ligne de commande Linux](configuration/Intro%20ligne%20de%20commande%20Linux.md)
 - [Procédure d'installation d'un nouveau service](configuration/Procédure%20d'installation%20d'un%20nouveau%20service.md)
 
 ---
-## downloading
+## media
 
-- [qbittorent & gluetun - docker](downloading/qbittorent%20&%20gluetun%20-%20docker.md)
-- [scripts qbittorrent](downloading/scripts%20qbittorrent.md)
+### downloading
+
+- [qbittorent & gluetun - docker](media/downloading/qbittorent%20&%20gluetun%20-%20docker.md)
+- [scripts qbittorrent](media/downloading/scripts%20qbittorrent.md)
+
+### music
+- autotagging avec [beets](media/music/beets.md)
 
 ---
 
-## Security
+## security
 
 - [Passwords](security/Passwords.md)
 - [firewall et ports ouverts](security/firewall%20et%20ports%20ouverts.md)
 
 ---
-
-## Music
-
-- [Reflexion automatisation flux musique](music/Reflexion%20automatisation%20flux%20musique.md)
-- autotagging avec [beets](music/beets.md)
-
----
-## Nas
+## NAS
 
 - [how to RAID5 on debian](NAS/how%20to%20RAID5%20on%20debian.md)
 
 ---
-## host your own website
+## website hosting
 
 - [via docker](website%20hosting/via%20docker.md)
 

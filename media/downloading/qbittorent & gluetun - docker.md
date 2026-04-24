@@ -59,7 +59,7 @@ services:
 ```
 
 Pour trouver vos identifiants OpenVPN sur proton il suffit de vous rendre à cet endroit : 
-![697](../__images/Screenshot%20From%202026-04-23%2022-07-13.png)
+![697](../../__images/Screenshot%20From%202026-04-23%2022-07-13.png)
 ## what's next ?
 
 éxécuter un [scripts qbittorrent](scripts%20qbittorrent.md) personnalisé après le téléchargement de chaque torrent ! 

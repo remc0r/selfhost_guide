@@ -2,7 +2,7 @@ Une fois [qbittorent & gluetun - docker](qbittorent%20&%20gluetun%20-%20docker.m
 
 Dans `Tools` -> `Options` -> `Downloads`, on retrouve l'option `Run on torrent finished`, on voit également quel paramètre on peut prendre en compte dans notre script
 
-![](../__images/Pasted%20image%2020260423220055.png)
+![](../../__images/Pasted%20image%2020260423220055.png)
 
 Supported parameters (case sensitive):
 
