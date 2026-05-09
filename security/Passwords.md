@@ -13,45 +13,6 @@ https://x.com/iv2fi/status/2031401887367397461?s=46
 Tester la robustesse de son mot de passe: [https://bitwarden.com/fr-fr/password-strength/](https://bitwarden.com/fr-fr/password-strength/ "https://bitwarden.com/fr-fr/password-strength/")
 
 ---
-## VaultWarden
+## what's next
 
-[Vaultwarden](https://github.com/dani-garcia/vaultwarden) est un fork open-source du gestionnaire de mot de passe [Bitwarden](https://bitwarden.com/fr-fr/)
-
-### Installation
-
-On peut facilement l'auto-héberger dans un docker avec la configuration suivante :
-
-```yaml
-services:
-  vaultwarden:
-      container_name: vaultwarden
-      volumes:
-          - /srv/appdata/vaultwarden:/data
-     #environment:
-         #- SIGNUPS_ALLOWED=false
-      image: 'vaultwarden/server:latest'
-      ports:
-        - "8081:80"
-      restart: always
-```
-
-Une fois configuré et déployé via le flux : [Créer son propre tunnel Cloudflare](../configuration/Créer%20son%20propre%20tunnel%20Cloudflare.md) [Procédure d'installation d'un nouveau service](../configuration/Procédure%20d'installation%20d'un%20nouveau%20service.md)
-
-### Extension navigateur
-
-Il ne reste plus qu'a installer [l'application de bureau ou l'extension de navigateur bitwarden](https://bitwarden.com/fr-fr/download/)
-Dans l'extension, choisir `self-hosted`
-![Pasted image 20260310174221](/__images/Pasted%20image%2020260310174221.png)
-
-Et indiquer l'url de votre VaultWarden.
-
-Sur l'extension on peut également générer des mots de passes, et choisir les conditions de génération pour ceux-ci
-
-![Pasted image 20260310180003](/__images/Pasted%20image%2020260310180003.png)
-
-### Interface Web et outils
-
-Sur l'interface Web de Vaultwarden, on peut retrouver beaucoup d'outils et de rapports nous aidant à gérer nos mots de passe réutilisés, exposés, faibles etc.
-
-![Pasted image 20260310174758](/__images/Pasted%20image%2020260310174758.png)
-
+Il est fortement recommandé d'utiliser un gestionnaire de mot de passe, l'étape d'après étant d'auto-héberger son propre gestionnaire de mot de passe comme avec [vaultwarden](vaultwarden.md)

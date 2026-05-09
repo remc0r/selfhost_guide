@@ -138,7 +138,7 @@ En résumé,
 
 Vous pouvez normalement désormais déclarer votre premier docker compose.
 
-En suivant la trame [Procédure d'installation d'un nouveau service](Procédure%20d'installation%20d'un%20nouveau%20service.md)
+En suivant la trame [Procédure d'installation d'un nouveau service](../Procédure%20d'installation%20d'un%20nouveau%20service.md)
 
 ## Utiliser Docker sans sudo
 
