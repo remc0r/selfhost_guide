@@ -90,6 +90,6 @@ rm -f "$LATEST_DB"
 
 ```
 
-Ce script requiert d'avoir une configuration [rclone](../configuration/sauvegardes/rclone.md)déjà en place.
+Ce script requiert d'avoir une configuration [rclone](../configuration/sauvegardes/rclone.md) déjà en place.
 
 On pourra ensuite venir configurer ce script dans [cron](../configuration/sauvegardes/cron.md) pour le faire tourner à occurence régulière.

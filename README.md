@@ -9,6 +9,10 @@ notes: il est préférable de lire ce repo avec l'interface [Obsidian](https://o
 - [introduction & installation](configuration/docker/introduction%20&%20installation.md)
 - [move docker root folder location](configuration/docker/move%20docker%20root%20folder%20location.md)
 
+### sauvegardes
+- [cron](configuration/sauvegardes/cron.md)
+- [rclone](configuration/sauvegardes/rclone.md)
+
 ### autre
 - [Ansible](configuration/Ansible.md)
 - [Créer son propre tunnel Cloudflare](configuration/Créer%20son%20propre%20tunnel%20Cloudflare.md)
@@ -31,6 +35,7 @@ notes: il est préférable de lire ce repo avec l'interface [Obsidian](https://o
 ## security
 
 - [Passwords](security/Passwords.md)
+- [vaultwarden](security/vaultwarden.md)
 - [firewall et ports ouverts](security/firewall%20et%20ports%20ouverts.md)
 
 ---
