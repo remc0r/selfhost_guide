@@ -20,6 +20,11 @@ notes: il est préférable de lire ce repo avec l'interface [Obsidian](https://o
 - [Procédure d'installation d'un nouveau service](configuration/Procédure%20d'installation%20d'un%20nouveau%20service.md)
 
 ---
+## exit node
+
+- [mise en place technique](exit%20node/mise%20en%20place%20technique.md)
+- [services sous couvert d'un VPN](exit%20node/services%20sous%20couvert%20d'un%20VPN.md)
+---
 ## media
 
 ### downloading
