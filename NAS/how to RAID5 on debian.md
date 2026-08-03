@@ -89,12 +89,12 @@ systemctl cat mdcheck_start.timer
 
 ```bash
 
-# fait ajd
+# Augmenter le temps maximum
 sudo systemctl edit mdcheck_start.service
 [Service]
 Environment="MDADM_CHECK_DURATION=12 hours"
 
-# a faire demain
+# Reprogrammer la fréquence
 sudo systemctl edit mdcheck_start.timer
 
 [Timer]
