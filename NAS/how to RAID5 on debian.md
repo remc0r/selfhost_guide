@@ -79,3 +79,31 @@ sudo mount -t nfs 192.168.1.120:/data /media
 
 ```
 
+## reprogrammer le mdcheck
+
+### commande pour afficher le cron de vérification
+
+```bash
+systemctl cat mdcheck_start.timer
+```
+
+```bash
+
+# fait ajd
+sudo systemctl edit mdcheck_start.service
+[Service]
+Environment="MDADM_CHECK_DURATION=12 hours"
+
+# a faire demain
+sudo systemctl edit mdcheck_start.timer
+
+[Timer]
+#Bien mettre la ligne a vide pour vider la configuration d'origine, sinon problème de doublons
+OnCalendar=
+OnCalendar=Mon *-*-1..7 3:00:00
+RandomizedDelaySec=0
+
+sudo systemctl daemon-reload
+
+sudo systemctl restart mdcheck_start.timer
+```
