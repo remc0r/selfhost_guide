@@ -22,17 +22,23 @@ sudo mdadm --create --verbose /dev/md0   --level=5   --raid-devices=3   --name=r
 # Vérifier l'avancement
 cat /proc/mdstat
 
-#Créer dossier puis le monter
-mkdir data
+#Formater le RAID (possible pendant la synchronisation initiale)
+sudo mkfs.ext4 /dev/md0
+
+#Créer le point de montage puis monter
+sudo mkdir -p /data
 sudo mount /dev/md0 /data
 
-#Enregistrer la conf
+#Enregistrer la conf, puis régénérer l'initramfs pour que le RAID soit assemblé au boot
 sudo mdadm --detail --scan | sudo tee -a /etc/mdadm/mdadm.conf
+sudo update-initramfs -u
 
-#Faire en sorte que ça se monte au démarrage
-echo "/dev/mdO /data ext4 rw,nofail,relatime,x-systemd.device-timeout=20s,defaults 0 2" >> /etc/fstab
+#Récupérer l'UUID du système de fichiers
+sudo blkid /dev/md0
 
-echo "UUID=bbc1fa53-d6a4-4428-b182-c1a9ef80bcc5 /data ext4 defaults,nofail 0 2" | sudo tee -a /etc/fstab
+#Faire en sorte que ça se monte au démarrage (remplacer <UUID> par la valeur obtenue ci-dessus)
+#On utilise l'UUID plutôt que /dev/md0 : le RAID peut être renommé /dev/md127 au redémarrage
+echo "UUID=<UUID> /data ext4 defaults,nofail,x-systemd.device-timeout=20s 0 2" | sudo tee -a /etc/fstab
 
 ```
 
@@ -76,6 +82,9 @@ sudo chmod -R 775 /data
 sudo apt install nfs-common
 # Monter le dossier NFS avec l'ip du NAS
 sudo mount -t nfs 192.168.1.120:/data /media
+
+# Rendre le montage persistant au démarrage
+echo "192.168.1.120:/data /media nfs defaults,_netdev,nofail 0 0" | sudo tee -a /etc/fstab
 
 ```
 

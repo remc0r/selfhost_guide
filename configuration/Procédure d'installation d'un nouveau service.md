@@ -11,16 +11,16 @@ On peut également trouver beaucoup d'exemples et de ressources sur [Docker Hub]
 Pour l'exemple on va ici récupérer ce template
 ```yaml
 services:
-	web:
-	  image: nginx
-	  volumes:
-	   - ./templates:/etc/nginx/templates
-	  restart: unless-stopped
-	  ports:
-	   - "8080:80"
-	  environment:
-	   - NGINX_HOST=foobar.com
-	   - NGINX_PORT=80
+  web:
+    image: nginx
+    volumes:
+      - ./templates:/etc/nginx/templates
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      - NGINX_HOST=foobar.com
+      - NGINX_PORT=80
 ```
 
 Petite explication des différents champs :
@@ -39,7 +39,7 @@ Petite explication des différents champs :
 	  
 	  - Si conflits, vous pouvez changer le port de gauche, mais ne jamais toucher au port de droite, propre au docker
 	
-  - **restart**: Indispensable de le mettre a `unless-stopped` ou `always` si vous voulez que votre docker au démarrage de votre machine
+  - **restart**: Indispensable de le mettre a `unless-stopped` ou `always` si vous voulez que votre docker redémarre au démarrage de votre machine
   
   - **environment**: des variables spécifiques au conteneur docker, on peut facilement trouver sur les différentes documentations les valeurs possibles à configurer 
 

@@ -60,9 +60,9 @@ Avec Docker “simple”, on lance chaque conteneur **avec une commande**.
 Exemple :
 
 ```bash
-docker run -d \  
-  -p 8080:80 \  
-  --name mon-nginx \  
+docker run -d \
+  -p 8080:80 \
+  --name mon-nginx \
   nginx
 ```
 
@@ -153,8 +153,13 @@ Cela s'explique parce que le service Docker s'exécute avec des privilèges éle
 Pour pouvoir utiliser Docker **sans `sudo`**, il suffit d'ajouter votre utilisateur au groupe `docker` avec les commandes suivantes :
 
 ```bash
-sudo groupadd docker
+sudo groupadd docker   # le groupe existe normalement déjà après l'installation
 sudo gpasswd -a $USER docker
 ```
+
+Le changement de groupe n'est pris en compte qu'à la prochaine connexion : se déconnecter puis se reconnecter (ou lancer `newgrp docker` dans le terminal courant), puis vérifier avec `docker ps`.
+
+> [!warning]
+> Être membre du groupe `docker` équivaut à être `root` sur la machine : n'y ajouter que des utilisateurs de confiance.
 
 

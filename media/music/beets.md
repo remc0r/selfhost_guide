@@ -2,10 +2,18 @@ l'outil [beets](https://github.com/beetbox/beets) est un autotagger qui permets 
 Le tout connecté a des APIs de classification musicale comme [MusicBrainz](https://musicbrainz.org/) ou des APIs de récupération de lyrics.
 
 ## Installation
-On peut l'installer facilement avec le gestionnaire de paquet `pip` ou `pipx` selon les environnements.
+On l'installe avec `pipx`, qui crée un environnement Python isolé (sur Debian 12 et plus, `pip install` hors environnement virtuel est bloqué) :
 
 ```bash
-pip install beets
+sudo apt install pipx
+pipx ensurepath
+pipx install beets
+```
+
+Certains plugins utilisés plus bas ne sont pas inclus dans beets et s'ajoutent dans le même environnement :
+
+```bash
+pipx inject beets beets-filetote requests
 ```
 
 ## Configuration 
@@ -27,7 +35,8 @@ import:
   write: yes
   autotag: yes
   quiet_fallback: asis
-  ignore: sorted
+
+ignore: [sorted]
 
 plugins: musicbrainz fetchart embedart scrub lyrics chroma filetote spotify
 
@@ -91,13 +100,13 @@ sudo apt install ffmpeg
 Pour utiliser `beets` je recommande une architecture de ce type 
 
 ```
-└── music\
-    ├── inbox\
-    └── sorted\
+└── music/
+    ├── inbox/
+    └── sorted/
 ```
 
 ```bash
-beet import music/inbox
+beet import /mnt/ssd/media/music/inbox
 ```
 
 L'outil nous proposera ensuite de valider ses choix depuis la ligne de commande 

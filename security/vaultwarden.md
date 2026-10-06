@@ -8,15 +8,16 @@ On peut facilement l'auto-héberger dans un docker avec la configuration suivant
 ```yaml
 services:
   vaultwarden:
-      container_name: vaultwarden
-      volumes:
-          - /srv/appdata/vaultwarden:/data
-     #environment:
-         #- SIGNUPS_ALLOWED=false
-      image: 'vaultwarden/server:latest'
-      ports:
-        - "8081:80"
-      restart: always
+    container_name: vaultwarden
+    image: 'vaultwarden/server:latest'
+    volumes:
+      - /srv/appdata/vaultwarden:/data
+    # à décommenter une fois votre compte créé
+    # environment:
+    #   - SIGNUPS_ALLOWED=false
+    ports:
+      - "8081:80"
+    restart: always
 ```
 
 Une fois configuré et déployé via le flux : [Créer son propre tunnel Cloudflare](../configuration/Créer%20son%20propre%20tunnel%20Cloudflare.md) [Procédure d'installation d'un nouveau service](../configuration/Procédure%20d'installation%20d'un%20nouveau%20service.md)

@@ -24,7 +24,8 @@ sudo systemctl stop docker
 2. Copier les données
 
 ```
-sudo rsync -aP /var/lib/docker /mnt/ssd/docker
+# les slashes finaux sont importants : sans eux, rsync crée /mnt/ssd/docker/docker
+sudo rsync -aP /var/lib/docker/ /mnt/ssd/docker/
 ```
 
 3. Configurer Docker

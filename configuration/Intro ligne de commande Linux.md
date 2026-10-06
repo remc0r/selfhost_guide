@@ -38,19 +38,19 @@ systemctl enable nginx
 
 compose.yaml
 ``` yaml
-services:  
-nginx:  
-image: nginx  
-ports:  
-- "8080:80"  
-volumes:  
-- ./html:/usr/share/nginx/html
+services:
+  nginx:
+    image: nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./html:/usr/share/nginx/html
 ```
 
 ```bash
 docker compose up -d
 docker compose down
-docker logs jellyfin
+docker logs <nom-du-conteneur>
 ```
 
 ## Maintenance et mise à jour

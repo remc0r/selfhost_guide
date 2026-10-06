@@ -21,6 +21,14 @@ Supported parameters (case sensitive):
 
 Tip: Encapsulate parameter with quotation marks to avoid text being cut off at whitespace (e.g., "%N")
 
+Dans le champ `Run on torrent finished`, on appelle le script en lui passant les paramètres dans cet ordre (le script les récupère ensuite via `$1`, `$2`, etc.) :
+
+```bash
+/scripts/move.sh "%N" "%L" "%G" "%F" "%R" "%D"
+```
+
+Ici `$1` = `%N` (nom), `$4` = `%F` (chemin du contenu) et `$6` = `%D` (dossier de sauvegarde). Penser à rendre le script exécutable : `chmod +x scripts/move.sh`.
+
 Voici un exemple de script qui permets de déplacer des fichiers après téléchargements.
 
 ```bash
@@ -52,10 +60,13 @@ mkdir -p "$(dirname "$LOG_FILE")" 2>/dev/null
 if mv "$CONTENT_PATH" "$DESTINATION_PATH/"; then
     echo "$(date) - ✓ $TORRENT_NAME → $DESTINATION_PATH" >> "$LOG_FILE" 2>/dev/null
     # Nettoyer les dossiers vides
-    find "$SAVE_PATH" -type d -empty -delete 2>/dev/null
+    find "$SAVE_PATH" -mindepth 1 -type d -empty -delete 2>/dev/null
 else
     echo "$(date) - ✗ ERREUR: $TORRENT_NAME" >> "$LOG_FILE" 2>/dev/null
     exit 1
 fi
 
 ```
+
+> [!warning]
+> Le script déplace les fichiers alors que le torrent est encore actif dans qBittorrent : celui-ci passe en erreur *missing files* et ne seede plus. Il faut donc soit supprimer le torrent de qBittorrent (sans supprimer les fichiers) une fois le déplacement fait, soit remplacer `mv` par `cp -r` et laisser qBittorrent nettoyer via `Options` → `BitTorrent` → *Seeding Limits* → *Remove torrent and its files*.
