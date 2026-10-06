@@ -42,6 +42,7 @@ notes: il est préférable de lire ce repo avec l'interface [Obsidian](https://o
 - [Passwords](security/Passwords.md)
 - [vaultwarden](security/vaultwarden.md)
 - [firewall et ports ouverts](security/firewall%20et%20ports%20ouverts.md)
+- [traefik + crowdsec + cloudflare](security/traefik%20+%20crowdsec%20+%20cloudflare.md)
 
 ---
 ## NAS
