@@ -310,7 +310,108 @@ networks:
 Plusieurs middlewares se chaînent avec une virgule, par exemple `crowdsec@file,authentik@file` pour ajouter une authentification SSO ([Authentik](https://goauthentik.io/)) derrière le filtrage CrowdSec.
 
 ---
-## 7. Vérifier que ça fonctionne
+## 7. Durcissement
+
+### Rate limit et headers de sécurité
+
+Deux middlewares supplémentaires dans `dynamic.yml` :
+
+```yaml
+http:
+  middlewares:
+    rate-limit:
+      rateLimit:
+        average: 100   # requêtes par seconde en moyenne, par IP
+        burst: 200
+
+    security-headers:
+      headers:
+        frameDeny: true                              # interdit l'affichage dans un iframe (clickjacking)
+        contentTypeNosniff: true                     # le navigateur ne devine plus le type des fichiers
+        referrerPolicy: strict-origin-when-cross-origin
+        stsSeconds: 15552000                         # HSTS : HTTPS obligatoire pendant 180 jours
+```
+
+Ils se chaînent aux labels des services :
+
+```yaml
+      - traefik.http.routers.vault.middlewares=crowdsec@file,rate-limit@file,security-headers@file
+```
+
+- **rate-limit** : limite avant détection. CrowdSec bannit après coup, le rate limit freine tout de suite. Si une app envoie beaucoup de requêtes (synchronisation Nextcloud, apps mobiles), des erreurs `429` apparaissent : augmenter `average`.
+- **security-headers** : protège le navigateur du visiteur, pas le serveur. À ne pas mettre sur les apps intégrées dans un iframe, ni sur celles qui envoient déjà leurs propres headers (Nextcloud).
+
+> [!warning]
+> Le HSTS oblige les navigateurs à refuser le HTTP sur ce domaine pendant 180 jours. Il faut donc que le renouvellement des certificats reste fonctionnel.
+
+Vérification :
+
+```bash
+curl -sI https://vault.mondomaine.com | grep -i -E "strict|x-frame|nosniff|referrer"
+```
+
+### Ne pas exposer de ports inutiles
+
+Tout port publié avec `"8191:8191"` écoute sur **toutes** les interfaces. Pour un service qui n'a pas besoin d'être public, préciser l'IP :
+
+```yaml
+    ports:
+      - "<IP-PRIVEE>:8191:8191"    # ou 127.0.0.1
+```
+
+Lister les ports ouverts sur l'hôte :
+
+```bash
+ss -tlnp | grep -v '127.0.0.'
+```
+
+Un conteneur en `network_mode: host` (Home Assistant par exemple) contourne cette règle : il écoute directement sur l'hôte.
+
+### Socket Docker
+
+`/var/run/docker.sock` donne un contrôle total de la machine à qui peut y écrire. Le monter en lecture seule (`:ro`) limite les dégâts mais ne les supprime pas. Pour aller plus loin, placer un [docker-socket-proxy](https://github.com/Tecnativa/docker-socket-proxy) devant Traefik pour ne laisser passer que les requêtes en lecture.
+
+### Rotation des logs
+
+`access.log` grossit sans limite (plusieurs Go en quelques mois). Créer `/etc/logrotate.d/traefik` :
+
+```
+/chemin/vers/traefik/logs/access.log {
+    daily
+    rotate 7
+    compress
+    delaycompress
+    missingok
+    notifempty
+    postrotate
+        docker kill -s USR1 traefik >/dev/null 2>&1 || true
+    endscript
+}
+```
+
+Le signal `USR1` demande à Traefik de rouvrir son fichier de log ; sans lui il continuerait d'écrire dans l'ancien. CrowdSec suit automatiquement le nouveau fichier. Test immédiat :
+
+```bash
+sudo logrotate -f /etc/logrotate.d/traefik
+ls -lh traefik/logs
+```
+
+### Logs SSH sur Debian récent
+
+Sans `rsyslog`, `/var/log/auth.log` n'existe pas (tout est dans journald) et Docker crée un **dossier** vide à la place lors du montage. Installer rsyslog, supprimer ces dossiers puis recréer le conteneur CrowdSec :
+
+```bash
+sudo apt install rsyslog
+sudo systemctl enable --now rsyslog
+sudo rmdir /var/log/auth.log /var/log/syslog   # seulement si ce sont des dossiers vides
+sudo systemctl restart rsyslog
+```
+
+> [!note]
+> Le plugin Traefik ne bloque que le HTTP. Pour que les bans CrowdSec s'appliquent aussi à SSH, il faut un bouncer firewall (`crowdsec-firewall-bouncer`). Si SSH n'est accessible que via un VPN (Tailscale), ce n'est pas indispensable.
+
+---
+## 8. Vérifier que ça fonctionne
 
 ```bash
 # le bouncer est bien connecté (colonne "Last API pull" récente)
@@ -353,6 +454,7 @@ docker exec crowdsec cscli decisions delete --ip <IP-DE-TEST>
 | `acquisition` vide dans `cscli metrics` | Fichier `acquis.d/*.yaml` absent, ou volume des logs mal monté |
 | Bouncer absent de `cscli bouncers list` | Mauvaise clé dans `dynamic.yml`, ou Traefik et CrowdSec pas sur le même réseau `proxy` |
 | Plugin non chargé | Version du plugin dans `traefik.yml`, accès internet du conteneur au démarrage |
+| Erreurs `429` | `rate-limit` trop strict : augmenter `average` / `burst` |
 | Une IP légitime est bannie | `docker exec crowdsec cscli decisions delete --ip <IP>` |
 
 ## Pour aller plus loin
